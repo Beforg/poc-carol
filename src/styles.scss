@@ -1,1 +1,93 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+	--color-bg: #f3ece3;
+	--color-surface: #fcfaf6;
+	--color-surface-muted: #efe5d6;
+	--color-text: #2b241d;
+	--color-text-muted: #5f5548;
+	--color-accent: #8a451f;
+	--color-accent-strong: #6b3418;
+	--color-border: #dccdb8;
+	--color-footer: #1f1f1f;
+	--shadow-soft: 0 18px 42px rgba(20, 13, 8, 0.12);
+	--radius-lg: 18px;
+	--radius-md: 12px;
+	--radius-sm: 8px;
+	--font-display: 'Cormorant Garamond', Georgia, serif;
+	--font-body: 'Nunito Sans', 'Segoe UI', sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	min-height: 100%;
+}
+
+body {
+	font-family: var(--font-body);
+	color: var(--color-text);
+	background:
+		radial-gradient(circle at 15% -10%, #fff8ef 0%, transparent 30%),
+		radial-gradient(circle at 85% 0, #f0dfc9 0%, transparent 28%),
+		var(--color-bg);
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.container {
+	width: min(1120px, calc(100% - 2rem));
+	margin-inline: auto;
+}
+
+.section-title {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.section-description {
+	margin: 0;
+	color: var(--color-text-muted);
+}
+
+.btn-primary,
+.btn-secondary {
+	border-radius: var(--radius-sm);
+	padding: 0.7rem 1.2rem;
+	border: 1px solid transparent;
+	font: inherit;
+	cursor: pointer;
+	transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary {
+	background-color: var(--color-accent);
+	color: #fff;
+}
+
+.btn-primary:hover {
+	background-color: var(--color-accent-strong);
+	transform: translateY(-1px);
+}
+
+.btn-secondary {
+	background-color: transparent;
+	border-color: var(--color-border);
+	color: var(--color-text);
+}
+
+.btn-secondary:hover {
+	border-color: var(--color-accent);
+}

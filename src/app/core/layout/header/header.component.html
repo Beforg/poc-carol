@@ -1,0 +1,21 @@
+<header class="header">
+  <div class="container header__content">
+    <a class="brand" href="#inicio" aria-label="Ir para inicio">
+      <span class="brand__name">Loja da Carol</span>
+      <span class="brand__subtitle">Casa &amp; Decoracao</span>
+    </a>
+
+    <nav class="nav" aria-label="Navegacao principal">
+      @for (item of navigation; track item.anchor) {
+        <a class="nav__link" [href]="item.anchor">{{ item.label }}</a>
+      }
+    </nav>
+
+    <button class="cart-button" type="button" (click)="onToggleCart()" aria-label="Abrir carrinho">
+      Carrinho
+      @if (totalItems() > 0) {
+        <span class="cart-button__count">{{ totalItems() }}</span>
+      }
+    </button>
+  </div>
+</header>

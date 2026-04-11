@@ -1,0 +1,15 @@
+<article class="card">
+  <div class="card__image-wrapper">
+    <img class="card__image" [src]="product.image" [alt]="product.title" loading="lazy" />
+    <span class="card__tag">{{ product.tag }}</span>
+  </div>
+
+  <div class="card__content">
+    <h3 class="card__title">{{ product.title }}</h3>
+    <p class="card__description">{{ product.description }}</p>
+    <p class="card__price">{{ product.price | currency: 'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
+    <button class="btn-secondary card__button" type="button" (click)="onAddToCart()">
+      Adicionar ao carrinho
+    </button>
+  </div>
+</article>

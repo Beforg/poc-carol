@@ -1,0 +1,14 @@
+<section class="catalog" id="catalogo">
+  <div class="container">
+    <header class="catalog__header">
+      <h2 class="section-title">Nossos essenciais da temporada</h2>
+      <p class="section-description">Selecao de pecas para mesa, cozinha e decoracao afetiva.</p>
+    </header>
+
+    <div class="catalog__grid">
+      @for (product of products; track trackByProductId($index, product)) {
+        <app-card [product]="product" (addToCart)="addProduct($event)" />
+      }
+    </div>
+  </div>
+</section>
