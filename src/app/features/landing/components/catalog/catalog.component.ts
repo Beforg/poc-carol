@@ -55,7 +55,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
   }
 
   public openProductPreview(product: Product): void {
-    this.router.navigate(['/catalogo', product.reference]);
+    this.router.navigate(['catalogo', product.reference], { relativeTo: this.route });
   }
 
   public addProduct(product: Product): void {
@@ -108,7 +108,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((product) => {
         if (!product) {
-          this.router.navigate(['/'], { fragment: 'catalogo' });
+          this.router.navigate(['./'], { relativeTo: this.route, fragment: 'catalogo' });
           return;
         }
 
@@ -140,7 +140,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         }
 
         if (!shouldKeepRoute) {
-          this.router.navigate(['/'], { fragment: 'catalogo' });
+          this.router.navigate(['./'], { relativeTo: this.route, fragment: 'catalogo' });
         }
       });
   }
