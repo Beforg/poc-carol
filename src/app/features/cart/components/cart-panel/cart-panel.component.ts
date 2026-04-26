@@ -41,7 +41,7 @@ export class CartPanelComponent {
     const total = this.totalPrice();
 
     const orderDetails = items
-      .map(item => `${item.quantity}x ${item.title}`)
+      .map(item => `${item.quantity}x ${item.id}`)
       .join('\n');
 
     const formattedTotal = total.toLocaleString('pt-BR', {

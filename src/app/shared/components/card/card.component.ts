@@ -17,8 +17,16 @@ export class CardComponent {
   @Output()
   public readonly addToCart = new EventEmitter<Product>();
 
-  public onAddToCart(): void {
+  @Output()
+  public readonly preview = new EventEmitter<Product>();
+
+  public onAddToCart(event?: Event): void {
+    event?.stopPropagation();
     this.emitAddToCart();
+  }
+
+  public onPreview(): void {
+    this.preview.emit(this.product);
   }
 
   private emitAddToCart(): void {

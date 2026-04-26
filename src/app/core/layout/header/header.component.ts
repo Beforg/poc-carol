@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 
 interface NavigationItem {
+  id: string;
   label: string;
   anchor: string;
 }
@@ -25,12 +26,12 @@ export class HeaderComponent {
 
   private buildNavigation(): NavigationItem[] {
     return [
-      { label: 'Inicio', anchor: '#inicio' },
-      { label: 'Ceramicas', anchor: '#catalogo' },
-      { label: 'Texteis', anchor: '#catalogo' },
-      { label: 'Moveis', anchor: '#catalogo' },
-      { label: 'Sobre', anchor: '#sobre' },
-      { label: 'Contato', anchor: '#contato' }
+      { id: 'inicio', label: 'Inicio', anchor: '#inicio' },
+      { id: 'ceramicas', label: 'Ceramicas', anchor: '#catalogo' },
+      { id: 'texteis', label: 'Texteis', anchor: '#catalogo' },
+      { id: 'moveis', label: 'Moveis', anchor: '#catalogo' },
+      { id: 'sobre', label: 'Sobre', anchor: '#sobre' },
+      { id: 'contato', label: 'Contato', anchor: '#contato' }
     ];
   }
 }

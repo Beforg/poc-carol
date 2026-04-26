@@ -1,8 +1,19 @@
 export interface Product {
   id: number;
-  title: string;
+  reference: string;
   price: number;
-  tag: string;
   image: string;
   description: string;
+}
+
+export interface ProductQueryParams {
+  page: number;
+  pageSize: number;
+}
+
+export interface ProductListResponse {
+  items: Product[];
+  total: number;
+  page: number;
+  pageSize: number;
 }

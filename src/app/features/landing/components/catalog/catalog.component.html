@@ -2,13 +2,30 @@
   <div class="container">
     <header class="catalog__header">
       <h2 class="section-title">Nossos essenciais da temporada</h2>
-      <p class="section-description">Selecao de pecas para mesa, cozinha e decoracao afetiva.</p>
+      <p class="section-description">
+        Clique no card para ampliar a imagem. Use a paginacao para navegar pelos itens.
+      </p>
     </header>
 
     <div class="catalog__grid">
       @for (product of products; track trackByProductId($index, product)) {
-        <app-card [product]="product" (addToCart)="addProduct($event)" />
+        <app-card
+          [product]="product"
+          (preview)="openProductPreview($event)"
+          (addToCart)="addProduct($event)"
+        />
       }
     </div>
+
+    <mat-paginator
+      class="catalog__paginator"
+      [length]="totalProducts"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions"
+      [showFirstLastButtons]="true"
+      aria-label="Paginacao do catalogo"
+      (page)="onPageChange($event)"
+    />
   </div>
 </section>

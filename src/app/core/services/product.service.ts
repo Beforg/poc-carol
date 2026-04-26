@@ -1,83 +1,55 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
-import { Product } from '../../shared/models/product.model';
+import {
+  Product,
+  ProductListResponse,
+  ProductQueryParams
+} from '../../shared/models/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   private readonly products = this.createProducts();
+  private readonly simulatedLatencyMs = 120;
 
-  public getProducts(): Product[] {
-    return this.products;
+  public getProducts(params: ProductQueryParams): Observable<ProductListResponse> {
+    const start = (params.page - 1) * params.pageSize;
+    const end = start + params.pageSize;
+
+    return of({
+      items: this.products.slice(start, end),
+      total: this.products.length,
+      page: params.page,
+      pageSize: params.pageSize
+    }).pipe(delay(this.simulatedLatencyMs));
+  }
+
+  public getProductByReference(reference: string): Observable<Product | undefined> {
+    return of(this.products.find((product) => product.reference === reference)).pipe(
+      delay(this.simulatedLatencyMs)
+    );
   }
 
   private createProducts(): Product[] {
-    return [
-      {
-        id: 1,
-        title: 'Caneca Rustica de Ceramica',
-        price: 89.9,
-        tag: 'Artesanal',
-        image: 'https://picsum.photos/seed/mug-rustica/640/640',
-        description: 'Modelada a mao com acabamento fosco e toque natural.'
-      },
-      {
-        id: 2,
-        title: 'Bowl Terracota Atemporal',
-        price: 75.9,
-        tag: 'Ceramica Unica',
-        image: 'https://picsum.photos/seed/bowl-terracota/640/640',
-        description: 'Pequenas variacoes de textura que tornam cada peca unica.'
-      },
-      {
-        id: 3,
-        title: 'Manta de Algodao Organico',
-        price: 160,
-        tag: 'La Sustentavel',
-        image: 'https://picsum.photos/seed/manta-organica/640/640',
-        description: 'Tecido leve e confortavel para compor ambientes acolhedores.'
-      },
-      {
-        id: 4,
-        title: 'Tabua de Servir de Madeira',
-        price: 120,
-        tag: 'Artesanal',
-        image: 'https://picsum.photos/seed/tabua-madeira/640/640',
-        description: 'Madeira reaproveitada e acabamento com oleo mineral.'
-      },
-      {
-        id: 5,
-        title: 'Conjunto de Pratos Claros',
-        price: 145,
-        tag: 'Ceramica Unica',
-        image: 'https://picsum.photos/seed/pratos-claros/640/640',
-        description: 'Ideal para mesa posta com visual leve e elegante.'
-      },
-      {
-        id: 6,
-        title: 'Vaso Terracota Alto',
-        price: 98.5,
-        tag: 'Artesanal',
-        image: 'https://picsum.photos/seed/vaso-terracota/640/640',
-        description: 'Formato vertical para folhagens e composicoes naturais.'
-      },
-      {
-        id: 7,
-        title: 'Jogo Americano em Fibras',
-        price: 69,
-        tag: 'La Sustentavel',
-        image: 'https://picsum.photos/seed/jogo-americano/640/640',
-        description: 'Feito com fibras naturais para uso diario.'
-      },
-      {
-        id: 8,
-        title: 'Porta Mantimentos Ceramica',
-        price: 133.9,
-        tag: 'Ceramica Unica',
-        image: 'https://picsum.photos/seed/porta-mantimentos/640/640',
-        description: 'Organizacao funcional com estilo artesanal.'
-      }
-    ];
+    const totalAssets = 107;
+
+    return Array.from({ length: totalAssets }, (_, index) => {
+      const reference = String(index + 1);
+
+      return {
+        id: index + 1,
+        reference,
+        price: this.calculatePrice(index + 1),
+        image: `assets/${reference}.jpeg`,
+        description: `Descricao do item de referencia ${reference}.`
+      };
+    });
+  }
+
+  private calculatePrice(referenceNumber: number): number {
+    return Number((79 + referenceNumber * 3.15).toFixed(2));
   }
 }

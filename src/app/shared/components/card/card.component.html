@@ -1,14 +1,20 @@
-<article class="card">
+<article
+  class="card"
+  role="button"
+  tabindex="0"
+  (click)="onPreview()"
+  (keydown.enter)="onPreview()"
+  (keydown.space)="$event.preventDefault(); onPreview()"
+>
   <div class="card__image-wrapper">
-    <img class="card__image" [src]="product.image" [alt]="product.title" loading="lazy" />
-    <span class="card__tag">{{ product.tag }}</span>
+    <img class="card__image" [src]="product.image" [alt]="'Referencia ' + product.reference" loading="lazy" />
   </div>
 
   <div class="card__content">
-    <h3 class="card__title">{{ product.title }}</h3>
+    <h3 class="card__title">REF: {{ product.reference }}</h3>
     <p class="card__description">{{ product.description }}</p>
     <p class="card__price">{{ product.price | currency: 'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
-    <button class="btn-secondary card__button" type="button" (click)="onAddToCart()">
+    <button class="btn-secondary card__button" type="button" (click)="onAddToCart($event)">
       Adicionar ao carrinho
     </button>
   </div>
