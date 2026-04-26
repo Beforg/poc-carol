@@ -11,6 +11,8 @@ import { CartItem, CartService } from '../../../../core/services/cart.service';
   styleUrl: './cart-panel.component.scss'
 })
 export class CartPanelComponent {
+  private readonly businessWhatsAppNumber = '5555996483078';
+
   private readonly cartService = inject(CartService);
 
   public readonly items = this.cartService.items;
@@ -35,9 +37,23 @@ export class CartPanelComponent {
   }
 
   public finalizeOrder(): void {
-    if (this.totalItems() === 0) {
-      return;
-    }
+    const items = this.items();
+    const total = this.totalPrice();
+
+    const orderDetails = items
+      .map(item => `${item.quantity}x ${item.title}`)
+      .join('\n');
+
+    const formattedTotal = total.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    });
+
+    const message = `Olá! Gostaria de fazer o seguinte pedido:\n\n${orderDetails}\n\n*Total: ${formattedTotal}*`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${this.businessWhatsAppNumber}?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, '_blank');
 
     this.cartService.clearCart();
     this.cartService.closePanel();
