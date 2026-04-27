@@ -36,26 +36,28 @@ export class CartPanelComponent {
     this.cartService.removeItem(item.id);
   }
 
-  public finalizeOrder(): void {
-    const items = this.items();
-    const total = this.totalPrice();
+finalizeOrder() {
+  if (this.totalItems() !== 0) {
+    // Variáveis fáceis de alterar depois
+    const nomeDoSite = 'http://carol-frontend.s3-website-us-east-1.amazonaws.com'; 
+    const telefoneWhatsApp = '5555984536737';
 
-    const orderDetails = items
-      .map(item => `${item.quantity}x ${item.id}`)
-      .join('\n');
+    let mensagem = 'Olá, gostaria de fazer o pedido dos seguintes itens:\n\n';
 
-    const formattedTotal = total.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
+    this.cartService.items().forEach(item => {
+      mensagem += `🔸 *REF:* ${item.reference}\n`;
+      mensagem += `🛒 *Quantidade:* ${item.quantity}\n`;
+      mensagem += `🔗 *Link:* ${nomeDoSite}/catalogo/${item.reference}\n\n`;
     });
 
-    const message = `Olá! Gostaria de fazer o seguinte pedido:\n\n${orderDetails}\n\n*Total: ${formattedTotal}*`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${this.businessWhatsAppNumber}?text=${encodedMessage}`;
+    mensagem += `*Total do Pedido:* R$ ${this.totalPrice().toFixed(2)}\n`;
 
-    window.open(whatsappUrl, '_blank');
+    const url = `https://wa.me/${telefoneWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, '_blank');
 
     this.cartService.clearCart();
-    this.cartService.closePanel();
+    this.closePanel();
   }
+}
+
 }

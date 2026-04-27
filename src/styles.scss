@@ -16,6 +16,66 @@
 	--radius-sm: 8px;
 	--font-display: 'Cormorant Garamond', Georgia, serif;
 	--font-body: 'Nunito Sans', 'Segoe UI', sans-serif;
+	  --color-surface: #ffffff;
+  --color-background: #f9f5ef;
+  --color-text: #1d1610;
+  --color-text-muted: #5a5a5a;
+  --color-border: #e5e5e5;
+  --color-footer: #1d1610;
+}
+
+/* ---- TEMA CLARO (Padrão) ---- */
+
+
+/* ---- TEMA ESCURO ---- */
+body.dark-theme {
+  --color-surface: #1e1e1e;
+  --color-background: #121212;
+  --color-text: #f9f5ef;
+  --color-text-muted: #b0b0b0;
+  --color-border: #333333;
+  --color-footer: #000000;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ---- AJUSTES PARA MOBILE ---- */
+@media (max-width: 768px) {
+  /* Header em coluna no mobile */
+  .header__content {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .header__actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+  }
+  .btn-theme-toggle {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  
+  /* Footer em coluna no mobile */
+  .footer__content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .footer__logo {
+    margin: 0 auto;
+  }
 }
 
 * {

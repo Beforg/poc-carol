@@ -1,21 +1,25 @@
 <header class="header">
   <div class="container header__content">
-    <a class="brand" href="#inicio" aria-label="Ir para inicio">
-      <span class="brand__name">Loja da Carol</span>
-      <span class="brand__subtitle">Casa &amp; Decoracao</span>
+    <!-- Logo em vez do Texto -->
+    <a href="#inicio" class="brand" aria-label="Ir para início">
+      <img src="/logo.png" alt="Madero Esculturas" class="brand__logo">
     </a>
 
-    <nav class="nav" aria-label="Navegacao principal">
-      @for (item of navigation; track item.anchor) {
-        <a class="nav__link" [href]="item.anchor">{{ item.label }}</a>
-      }
+    <!-- Menu Simplificado -->
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#inicio" class="nav__link">Início</a>
+      <a href="#catalogo" class="nav__link">Catálogo</a>
+      <a href="#contato" class="nav__link">Contato</a>
     </nav>
 
-    <button class="cart-button" type="button" (click)="onToggleCart()" aria-label="Abrir carrinho">
-      Carrinho
-      @if (totalItems() > 0) {
-        <span class="cart-button__count">{{ totalItems() }}</span>
-      }
-    </button>
+    <!-- Ações: Botão de Tema + Carrinho -->
+    <div class="header__actions">
+
+      <button type="button" class="cart-button" (click)="onToggleCart()" aria-label="Abrir carrinho">
+        <mat-icon>shopping_cart </mat-icon>
+        Carrinho 
+        <span class="cart-button__count" *ngIf="totalItems() > 0">{{ totalItems() }}</span>
+      </button>
+    </div>
   </div>
 </header>
