@@ -12,10 +12,10 @@
     <ul class="cart-panel__list">
       @for (item of items(); track item.id) {
         <li class="cart-panel__item">
-          <img [src]="item.image" [alt]="item.title" class="cart-panel__image" />
+          <img [src]="item.image" [alt]="item.id" class="cart-panel__image" />
 
           <div class="cart-panel__details">
-            <p class="cart-panel__item-title">{{ item.title }}</p>
+            <p class="cart-panel__item-title">{{ item.id }}</p>
             <p class="cart-panel__item-price">{{ item.price | currency: 'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
 
             <div class="cart-panel__actions">

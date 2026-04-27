@@ -4,6 +4,13 @@
   padding: 2.8rem 0 1.2rem;
 }
 
+.footer__logo {
+  display: block;
+  width: clamp(140px, 17vw, 190px);
+  height: auto;
+  background-color: white;
+}
+
 .footer__content {
   display: grid;
   gap: 1.4rem;

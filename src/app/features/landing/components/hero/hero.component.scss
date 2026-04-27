@@ -11,10 +11,10 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: var(--radius-lg);
+  //border-radius: var(--radius-lg);
   background:
     linear-gradient(to right, rgba(252, 250, 246, 0.9) 25%, rgba(252, 250, 246, 0.3) 70%),
-    url('https://picsum.photos/seed/hero-ceramica/1500/900') center/cover;
+    url('/background.png') center/cover;
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-soft);
   z-index: -1;
@@ -59,6 +59,6 @@
   .hero::before {
     background:
       linear-gradient(to top, rgba(252, 250, 246, 0.94) 35%, rgba(252, 250, 246, 0.38)),
-      url('https://picsum.photos/seed/hero-ceramica/1500/900') center/cover;
+      url('/background.png') center/cover;
   }
 }

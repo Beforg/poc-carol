@@ -1,11 +1,21 @@
 .catalog {
   padding: 2.8rem 0 3rem;
+  background-color: rgb(235, 231, 231);
 }
 
 .catalog__header {
   display: grid;
   gap: 0.6rem;
   margin-bottom: 1.2rem;
+}
+
+.catalog__paginator {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+  border-radius: 5px;
+  background-color: white;
 }
 
 .catalog__grid {

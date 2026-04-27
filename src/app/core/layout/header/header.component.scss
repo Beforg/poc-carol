@@ -2,11 +2,19 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  background: color-mix(in srgb, var(--color-surface) 92%, #fff);
+   background: rgb(236, 233, 233);
   border-bottom: 1px solid var(--color-border);
   backdrop-filter: blur(6px);
+
+  
 }
 
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Garante que o header fica por cima do conteúdo da página */
+}
 .header__content {
   min-height: 82px;
   display: flex;
@@ -17,47 +25,46 @@
 
 .brand {
   display: inline-flex;
-  flex-direction: column;
-  color: var(--color-text);
+  align-items: center;
 }
 
-.brand__name {
-  font-family: var(--font-display);
-  font-size: 1.9rem;
-  line-height: 1;
-  letter-spacing: 0.04em;
-}
-
-.brand__subtitle {
-  font-size: 0.78rem;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
+.brand__logo {
+  display: block;
+  width: 100px;
+  height: auto;
 }
 
 .nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.1rem;
+  gap: 1.3rem;
 }
 
 .nav__link {
-  font-size: 0.95rem;
-  color: var(--color-text-muted);
+  font-size: 0.96rem;
+  font-weight: 400;
+  color: black;
   transition: color 0.2s ease;
 }
 
 .nav__link:hover {
-  color: var(--color-accent);
+  color: white;
 }
 
+.header__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.theme-button,
 .cart-button {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
   border: 1px solid var(--color-border);
-  background-color: #fff;
+  background-color: var(--color-surface);
   color: var(--color-text);
   border-radius: 999px;
   padding: 0.45rem 0.9rem;
@@ -77,7 +84,7 @@
 
 @media (max-width: 900px) {
   .header__content {
-    min-height: 104px;
+    min-height: 112px;
     flex-wrap: wrap;
     justify-content: center;
     padding-top: 0.75rem;
@@ -85,12 +92,15 @@
   }
 
   .brand {
-    align-items: center;
-    text-align: center;
     width: 100%;
+    justify-content: center;
   }
 
-  .cart-button {
+  .nav {
+    gap: 0.9rem;
+  }
+
+  .header__actions {
     margin-inline: auto;
   }
 }

@@ -4,11 +4,23 @@
   overflow: hidden;
   background: var(--color-surface);
   box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px rgba(20, 13, 8, 0.13);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 .card__image-wrapper {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
 
@@ -21,19 +33,6 @@
 
 .card:hover .card__image {
   transform: scale(1.04);
-}
-
-.card__tag {
-  position: absolute;
-  top: 0.7rem;
-  left: 0.7rem;
-  background: rgba(138, 69, 31, 0.95);
-  color: #fff;
-  font-size: 0.72rem;
-  padding: 0.28rem 0.55rem;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .card__content {
