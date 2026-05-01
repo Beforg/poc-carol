@@ -34,7 +34,7 @@ export class ProductService {
   }
 
   private createProducts(): Product[] {
-    const totalAssets = 107;
+    const totalAssets = 178;
 
     return Array.from({ length: totalAssets }, (_, index) => {
       const reference = String(index + 1);

@@ -1,23 +1,19 @@
 <header class="header">
   <div class="container header__content">
-    <!-- Logo em vez do Texto -->
     <a href="#inicio" class="brand" aria-label="Ir para início">
-      <img src="/logo.png" alt="Madero Esculturas" class="brand__logo">
+      <img src="/logo.png" alt="Madero Esculturas" class="brand__logo" />
     </a>
 
-    <!-- Menu Simplificado -->
     <nav class="nav" aria-label="Navegação principal">
       <a href="#inicio" class="nav__link">Início</a>
       <a href="#catalogo" class="nav__link">Catálogo</a>
       <a href="#contato" class="nav__link">Contato</a>
     </nav>
 
-    <!-- Ações: Botão de Tema + Carrinho -->
     <div class="header__actions">
-
       <button type="button" class="cart-button" (click)="onToggleCart()" aria-label="Abrir carrinho">
-        <mat-icon>shopping_cart </mat-icon>
-        Carrinho 
+        <mat-icon>shopping_cart</mat-icon>
+        Carrinho
         <span class="cart-button__count" *ngIf="totalItems() > 0">{{ totalItems() }}</span>
       </button>
     </div>
