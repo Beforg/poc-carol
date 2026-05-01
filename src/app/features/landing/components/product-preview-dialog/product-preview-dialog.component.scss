@@ -39,7 +39,7 @@
 .product-preview__content {
   padding-top: 2.2rem;
   display: grid;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 
 .product-preview__reference {
@@ -47,18 +47,6 @@
   font-family: var(--font-display);
   font-size: clamp(1.6rem, 4vw, 2.3rem);
   letter-spacing: 0.05em;
-}
-
-.product-preview__description {
-  margin: 0;
-  color: var(--color-text-muted);
-  line-height: 1.4;
-}
-
-.product-preview__price {
-  margin: 0;
-  font-size: 1.6rem;
-  font-weight: 700;
 }
 
 .product-preview__button {

@@ -38,19 +38,15 @@ export class CartPanelComponent {
 
 finalizeOrder() {
   if (this.totalItems() !== 0) {
-    // Variáveis fáceis de alterar depois
-    const nomeDoSite = 'http://carol-frontend.s3-website-us-east-1.amazonaws.com'; 
     const telefoneWhatsApp = '5555984536737';
 
-    let mensagem = 'Olá, gostaria de fazer o pedido dos seguintes itens:\n\n';
+    let mensagem = 'Olá! Gostaria de fazer o pedido dos seguintes itens:\n\n';
 
-    this.cartService.items().forEach(item => {
+    this.cartService.items().forEach((item) => {
       mensagem += `🔸 *REF:* ${item.reference}\n`;
       mensagem += `🛒 *Quantidade:* ${item.quantity}\n`;
-      mensagem += `🔗 *Link:* ${nomeDoSite}/catalogo/${item.reference}\n\n`;
+      mensagem += '\n';
     });
-
-    mensagem += `*Total do Pedido:* R$ ${this.totalPrice().toFixed(2)}\n`;
 
     const url = `https://wa.me/${telefoneWhatsApp}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, '_blank');

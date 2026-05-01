@@ -11,7 +11,7 @@ export interface ProductPreviewDialogResult {
 @Component({
   selector: 'app-product-preview-dialog',
   standalone: true,
-  imports: [CurrencyPipe, MatDialogModule],
+  imports: [MatDialogModule],
   templateUrl: './product-preview-dialog.component.html',
   styleUrl: './product-preview-dialog.component.scss'
 })
