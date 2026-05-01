@@ -38,5 +38,4 @@ jobs:
 
       # 5. Sincroniza a pasta gerada com o S3
       - name: Deploy para o S3
-        run: |
-          aws s3 sync ./dist/nome-do-seu-projeto s3://${{ secrets.S3_BUCKET_NAME }} --delete
+        run: aws s3 sync ./dist/poc-carol/browser s3://${{ secrets.S3_BUCKET_NAME }} --delete
