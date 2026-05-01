@@ -36,6 +36,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'us-east-1' # Substitua pela região do seu S3 (ex: sa-east-1)
 
-      # 5. Sincroniza a pasta gerada com o S3
+      # 5. Sincroniza a pasta gerada com o S3CLOUDFRONT_DISTRIBUTION_ID
       - name: Deploy para o S3
         run: aws s3 sync ./dist/poc-carol/browser s3://${{ secrets.S3_BUCKET_NAME }} --delete
+# ... (passos anteriores de build e S3 sync) ...
+
+      # 6. Invalida o cache do CloudFront para os usuários verem a versão nova
+      - name: Invalidar Cache do CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"

@@ -39,13 +39,13 @@ export class CartPanelComponent {
 finalizeOrder() {
   if (this.totalItems() !== 0) {
     const telefoneWhatsApp = '5555984536737';
-
+    const nomeDoSite = 'https://maderoesculturas.com'; 
     let mensagem = 'Olá! Gostaria de fazer o pedido dos seguintes itens:\n\n';
 
     this.cartService.items().forEach((item) => {
-      mensagem += `🔸 *REF:* ${item.reference}\n`;
+      mensagem += `🏷️ *REF:* ${item.reference}\n`;
       mensagem += `🛒 *Quantidade:* ${item.quantity}\n`;
-      mensagem += '\n';
+      mensagem += `🔗 *Link:* ${nomeDoSite}/catalogo/${item.reference}\n\n`;
     });
 
     const url = `https://wa.me/${telefoneWhatsApp}?text=${encodeURIComponent(mensagem)}`;
