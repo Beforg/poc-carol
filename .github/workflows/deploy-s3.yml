@@ -1,0 +1,42 @@
+name: Deploy Front-end para Amazon S3
+
+# Define o gatilho: O workflow roda automaticamente ao dar push na branch 'main'
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  deploy:
+    name: Build e Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o código do repositório para a máquina virtual do GitHub
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # 2. Prepara o ambiente Node.js para o build
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Ajuste para a versão que você utiliza
+
+      # 3. Instala as dependências e gera o build de produção
+      - name: Instalar dependências e Build
+        run: |
+          npm ci
+          npm run build
+
+      # 4. Configura as credenciais da AWS na máquina virtual
+      - name: Configurar credenciais da AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1' # Substitua pela região do seu S3 (ex: sa-east-1)
+
+      # 5. Sincroniza a pasta gerada com o S3
+      - name: Deploy para o S3
+        run: |
+          aws s3 sync ./dist/nome-do-seu-projeto s3://${{ secrets.S3_BUCKET_NAME }} --delete
