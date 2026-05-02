@@ -72,6 +72,10 @@
 
 .footer__bottom {
   margin-top: 1.3rem;
+  display: grid;
+  gap: 0.35rem;
+  justify-items: center;
+  text-align: center;
 }
 
 .footer__copyright {
@@ -79,6 +83,12 @@
   padding-top: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.footer__developer {
+  margin: 0;
+  font-size: 0.82rem;
   color: var(--color-text-muted);
 }
 
