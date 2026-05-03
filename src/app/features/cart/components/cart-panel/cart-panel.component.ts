@@ -1,4 +1,3 @@
-import { CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 import { CartItem, CartService } from '../../../../core/services/cart.service';
@@ -6,7 +5,7 @@ import { CartItem, CartService } from '../../../../core/services/cart.service';
 @Component({
   selector: 'app-cart-panel',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [],
   templateUrl: './cart-panel.component.html',
   styleUrl: './cart-panel.component.scss'
 })

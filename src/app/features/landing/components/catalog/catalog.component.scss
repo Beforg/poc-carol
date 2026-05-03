@@ -38,26 +38,6 @@
 
 @media (max-width: 560px) {
   .catalog__grid {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(78vw, 320px);
-    grid-template-columns: none;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    scroll-snap-type: x proximity;
-    overscroll-behavior-x: contain;
-  }
-
-  .catalog__grid app-card {
-    scroll-snap-align: start;
-  }
-
-  .catalog__grid::-webkit-scrollbar {
-    height: 0.4rem;
-  }
-
-  .catalog__grid::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: rgba(138, 69, 31, 0.32);
+    grid-template-columns: 1fr;
   }
 }
