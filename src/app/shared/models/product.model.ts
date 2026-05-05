@@ -4,11 +4,20 @@ export interface Product {
   price: number;
   image: string;
   description: string;
+  type: TipoEscultura;
+}
+
+export enum TipoEscultura {
+  Ovino = 'Ovino',
+  Equino = 'Equino',
+  Bovino = 'Bovino',
+  Outros = 'Outros'
 }
 
 export interface ProductQueryParams {
   page: number;
   pageSize: number;
+  type?: TipoEscultura | null;
 }
 
 export interface ProductListResponse {

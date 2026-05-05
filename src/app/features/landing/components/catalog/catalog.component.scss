@@ -9,6 +9,35 @@
   margin-bottom: 1.2rem;
 }
 
+.catalog__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.catalog__filter {
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background-color: #ffffff;
+  color: #222222;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.catalog__filter:hover {
+  transform: translateY(-1px);
+}
+
+.catalog__filter.is-active {
+  background-color: #222222;
+  border-color: #222222;
+  color: #ffffff;
+}
+
 .catalog__paginator {
   display: flex;
   justify-content: center;

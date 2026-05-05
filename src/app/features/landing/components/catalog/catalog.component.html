@@ -7,7 +7,20 @@
       </p>
     </header>
 
-    <div class="catalog__grid">
+    <div class="catalog__filters" role="group" aria-label="Filtrar catalogo">
+      @for (filter of filterOptions; track filter.key) {
+        <button
+          type="button"
+          class="catalog__filter"
+          [class.is-active]="filter.type === activeType"
+          (click)="setFilter(filter.type)"
+        >
+          {{ filter.label }}
+        </button>
+      }
+    </div>
+
+    <div class="catalog__grid" #catalogStart>
       @for (product of products; track trackByProductId($index, product)) {
         <app-card
           [product]="product"
