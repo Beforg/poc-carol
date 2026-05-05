@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -7,7 +7,7 @@ import { Subject, distinctUntilChanged, filter, map, startWith, take, takeUntil 
 import { CartService } from '../../../../core/services/cart.service';
 import { ProductService } from '../../../../core/services/product.service';
 import { CardComponent } from '../../../../shared/components/card/card.component';
-import { Product } from '../../../../shared/models/product.model';
+import { Product, TipoEscultura } from '../../../../shared/models/product.model';
 import {
   ProductPreviewDialogComponent,
   ProductPreviewDialogResult
@@ -28,6 +28,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
   private readonly dialog = inject(MatDialog);
   private readonly destroy$ = new Subject<void>();
 
+  @ViewChild('catalogStart') private catalogStart?: ElementRef<HTMLElement>;
+
   private dialogRef: MatDialogRef<ProductPreviewDialogComponent, ProductPreviewDialogResult> | null = null;
   private activeReference: string | null = null;
 
@@ -36,6 +38,14 @@ export class CatalogComponent implements OnInit, OnDestroy {
   public pageIndex = 0;
   public pageSize = 8;
   public readonly pageSizeOptions = [8, 12, 16, 24];
+  public activeType: TipoEscultura | null = null;
+  public readonly filterOptions = [
+    { key: 'all', label: 'Todos', type: null },
+    { key: 'bovino', label: 'Bovinos', type: TipoEscultura.Bovino },
+    { key: 'equino', label: 'Equinos', type: TipoEscultura.Equino },
+    { key: 'ovino', label: 'Ovinos', type: TipoEscultura.Ovino },
+    { key: 'outros', label: 'Outros', type: TipoEscultura.Outros }
+  ];
 
   public ngOnInit(): void {
     this.loadProductsPage(1, this.pageSize);
@@ -52,6 +62,18 @@ export class CatalogComponent implements OnInit, OnDestroy {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.loadProductsPage(this.pageIndex + 1, this.pageSize);
+    this.scrollToCatalogStart();
+  }
+
+  public setFilter(type: TipoEscultura | null): void {
+    if (this.activeType === type) {
+      return;
+    }
+
+    this.activeType = type;
+    this.pageIndex = 0;
+    this.loadProductsPage(1, this.pageSize);
+    this.scrollToCatalogStart();
   }
 
   public openProductPreview(product: Product): void {
@@ -68,7 +90,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
   private loadProductsPage(page: number, pageSize: number): void {
     this.productService
-      .getProducts({ page, pageSize })
+      .getProducts({ page, pageSize, type: this.activeType })
       .pipe(take(1))
       .subscribe((response) => {
         this.products = response.items;
@@ -76,6 +98,16 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.pageIndex = Math.max(response.page - 1, 0);
         this.pageSize = response.pageSize;
       });
+  }
+
+  private scrollToCatalogStart(): void {
+    if (!this.catalogStart) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      this.catalogStart?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 
   private watchReferenceFromRoute(): void {
