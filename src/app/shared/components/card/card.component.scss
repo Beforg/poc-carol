@@ -56,3 +56,27 @@
   width: 100%;
   margin-top: 0.15rem;
 }
+
+@media (max-width: 560px) {
+  .card__image-wrapper {
+    aspect-ratio: 4 / 3;
+  }
+
+  .card__content {
+    align-items: center;
+    text-align: center;
+    padding: 0.7rem 0.5rem 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .card__title {
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+  }
+
+  .card__button {
+    width: auto;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.78rem;
+  }
+}
