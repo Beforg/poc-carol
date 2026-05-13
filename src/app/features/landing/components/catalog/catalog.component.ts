@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject, distinctUntilChanged, filter, map, startWith, take, takeUntil } from 'rxjs';
 
 import { CartService } from '../../../../core/services/cart.service';
+import { FavoritesService } from '../../../../core/services/favorites.service';
 import { ProductService } from '../../../../core/services/product.service';
 import { CardComponent } from '../../../../shared/components/card/card.component';
 import { Product, TipoEscultura } from '../../../../shared/models/product.model';
@@ -12,6 +13,8 @@ import {
   ProductPreviewDialogComponent,
   ProductPreviewDialogResult
 } from '../product-preview-dialog/product-preview-dialog.component';
+
+type CatalogFilter = TipoEscultura | 'saved' | null;
 
 @Component({
   selector: 'app-catalog',
@@ -23,6 +26,7 @@ import {
 export class CatalogComponent implements OnInit, OnDestroy {
   private readonly productService = inject(ProductService);
   private readonly cartService = inject(CartService);
+  private readonly favoritesService = inject(FavoritesService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
@@ -38,9 +42,14 @@ export class CatalogComponent implements OnInit, OnDestroy {
   public pageIndex = 0;
   public pageSize = 8;
   public readonly pageSizeOptions = [8, 12, 16, 24];
-  public activeType: TipoEscultura | null = null;
-  public readonly filterOptions = [
+  public activeFilter: CatalogFilter = null;
+  public readonly filterOptions: ReadonlyArray<{
+    key: string;
+    label: string;
+    type: CatalogFilter;
+  }> = [
     { key: 'all', label: 'Todos', type: null },
+    { key: 'saved', label: 'Salvos', type: 'saved' },
     { key: 'bovino', label: 'Bovinos', type: TipoEscultura.Bovino },
     { key: 'equino', label: 'Equinos', type: TipoEscultura.Equino },
     { key: 'ovino', label: 'Ovinos', type: TipoEscultura.Ovino },
@@ -65,12 +74,12 @@ export class CatalogComponent implements OnInit, OnDestroy {
     this.scrollToCatalogStart();
   }
 
-  public setFilter(type: TipoEscultura | null): void {
-    if (this.activeType === type) {
+  public setFilter(type: CatalogFilter): void {
+    if (this.activeFilter === type) {
       return;
     }
 
-    this.activeType = type;
+    this.activeFilter = type;
     this.pageIndex = 0;
     this.loadProductsPage(1, this.pageSize);
     this.scrollToCatalogStart();
@@ -84,13 +93,44 @@ export class CatalogComponent implements OnInit, OnDestroy {
     this.cartService.addProduct(product);
   }
 
+  public toggleFavorite(product: Product): void {
+    this.favoritesService.toggleReference(product.reference);
+
+    if (this.activeFilter === 'saved') {
+      this.loadProductsPage(this.pageIndex + 1, this.pageSize);
+    }
+  }
+
+  public isFavorite(reference: string): boolean {
+    return this.favoritesService.isFavorite(reference);
+  }
+
   public trackByProductId(_: number, product: Product): number {
     return this.getProductId(product);
   }
 
   private loadProductsPage(page: number, pageSize: number): void {
+    if (this.activeFilter === 'saved') {
+      this.loadSavedProductsPage(page, pageSize);
+      return;
+    }
+
     this.productService
-      .getProducts({ page, pageSize, type: this.activeType })
+      .getProducts({ page, pageSize, type: this.activeFilter })
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.products = response.items;
+        this.totalProducts = response.total;
+        this.pageIndex = Math.max(response.page - 1, 0);
+        this.pageSize = response.pageSize;
+      });
+  }
+
+  private loadSavedProductsPage(page: number, pageSize: number): void {
+    const references = this.favoritesService.references();
+
+    this.productService
+      .getProductsByReferences(references, page, pageSize)
       .pipe(take(1))
       .subscribe((response) => {
         this.products = response.items;

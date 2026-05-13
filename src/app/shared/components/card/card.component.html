@@ -6,14 +6,40 @@
   (keydown.enter)="onPreview()"
   (keydown.space)="$event.preventDefault(); onPreview()"
 >
-  <div class="card__image-wrapper">
-    <img class="card__image" [src]="product.image" [alt]="'Referencia ' + product.reference" loading="lazy" />
+  <div class="card__media">
+    <span class="card__badge">{{ product.type }}</span>
+    <button
+      class="card__wishlist"
+      type="button"
+      [class.is-active]="isFavorite"
+      [attr.aria-pressed]="isFavorite"
+      [attr.aria-label]="isFavorite ? 'Remover dos salvos' : 'Salvar produto'"
+      [attr.title]="isFavorite ? 'Remover dos salvos' : 'Salvar'"
+      (click)="onToggleFavorite($event)"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path
+          d="M12 20.2l-1.4-1.3C5.4 14.2 2 11.1 2 7.4 2 4.7 4.2 2.5 6.9 2.5c1.5 0 3 .7 4.1 1.9 1.1-1.2 2.6-1.9 4.1-1.9 2.7 0 4.9 2.2 4.9 4.9 0 3.7-3.4 6.8-8.6 11.5L12 20.2z"
+        />
+      </svg>
+    </button>
+    <img
+      class="card__image"
+      [src]="product.image"
+      [alt]="'Imagem de ' + (product.description || 'referencia ' + product.reference)"
+      loading="lazy"
+    />
   </div>
 
-  <div class="card__content">
-    <h3 class="card__title">REF: {{ product.reference }}</h3>
-    <button class="btn-secondary card__button" type="button" (click)="onAddToCart($event)">
-      Adicionar ao carrinho
+  <div class="card__body">
+    <p class="card__eyebrow">REF: {{ product.reference }}</p>
+    <!-- <h3 class="card__title">{{ product.description || ('REF: ' + product.reference) }}</h3> -->
+    <div class="card__price">
+      <!-- <span class="card__price-value">{{ product.price | currency:'BRL':'symbol':'1.2-2' }}</span> -->
+      <!-- <span class="card__price-suffix">no pix</span> -->
+    </div>
+    <button class="card__button" type="button" (click)="onAddToCart($event)">
+      Adicionar
     </button>
   </div>
 </article>
