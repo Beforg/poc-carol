@@ -3,7 +3,7 @@
     <header class="catalog__header">
       <h2 class="section-title">Nosso Catálogo</h2>
       <p class="section-description">
-        Clique no card para ampliar a imagem. No celular, os itens aparecem em coluna vertical para facilitar a navegação.
+        Clique no card para ampliar a imagem. No celular, os itens aparecem em duas colunas com rolagem vertical.
       </p>
     </header>
 
@@ -12,7 +12,7 @@
         <button
           type="button"
           class="catalog__filter"
-          [class.is-active]="filter.type === activeType"
+          [class.is-active]="filter.type === activeFilter"
           (click)="setFilter(filter.type)"
         >
           {{ filter.label }}
@@ -20,25 +20,33 @@
       }
     </div>
 
-    <div class="catalog__grid" #catalogStart>
-      @for (product of products; track trackByProductId($index, product)) {
-        <app-card
-          [product]="product"
-          (preview)="openProductPreview($event)"
-          (addToCart)="addProduct($event)"
-        />
-      }
-    </div>
+    @if (products.length === 0) {
+      <div class="catalog__empty" #catalogStart>
+        <p>Nenhum item encontrado.</p>
+      </div>
+    } @else {
+      <div class="catalog__grid" #catalogStart>
+        @for (product of products; track trackByProductId($index, product)) {
+          <app-card
+            [product]="product"
+            [isFavorite]="isFavorite(product.reference)"
+            (preview)="openProductPreview($event)"
+            (addToCart)="addProduct($event)"
+            (toggleFavorite)="toggleFavorite($event)"
+          />
+        }
+      </div>
 
-    <mat-paginator
-      class="catalog__paginator"
-      [length]="totalProducts"
-      [pageSize]="pageSize"
-      [pageIndex]="pageIndex"
-      [pageSizeOptions]="pageSizeOptions"
-      [showFirstLastButtons]="true"
-      aria-label="Paginacao do catalogo"
-      (page)="onPageChange($event)"
-    />
+      <mat-paginator
+        class="catalog__paginator"
+        [length]="totalProducts"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="pageSizeOptions"
+        [showFirstLastButtons]="true"
+        aria-label="Paginacao do catalogo"
+        (page)="onPageChange($event)"
+      />
+    }
   </div>
 </section>

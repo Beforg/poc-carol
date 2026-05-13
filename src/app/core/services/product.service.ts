@@ -37,6 +37,28 @@ export class ProductService {
     );
   }
 
+  public getProductsByReferences(
+    references: string[],
+    page: number,
+    pageSize: number
+  ): Observable<ProductListResponse> {
+    const uniqueReferences = Array.from(new Set(references));
+    const filteredProducts = this.products.filter((product) =>
+      uniqueReferences.includes(product.reference)
+    );
+    const total = filteredProducts.length;
+    const safePage = total === 0 ? 1 : Math.min(Math.max(page, 1), Math.ceil(total / pageSize));
+    const start = (safePage - 1) * pageSize;
+    const end = start + pageSize;
+
+    return of({
+      items: filteredProducts.slice(start, end),
+      total,
+      page: safePage,
+      pageSize
+    }).pipe(delay(this.simulatedLatencyMs));
+  }
+
   private createProducts(): Product[] {
     const referencesByType: Record<TipoEscultura, number[]> = {
       [TipoEscultura.Equino]: [
